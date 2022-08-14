@@ -13,13 +13,7 @@ class MockStudentRepository implements StudentRepsitory {
   MockStudentRepository.random(int seed, this.len) : _rn = Random.seed(seed);
   @override
   Future<List<Student>> getAllStudents() async {
-    return Future.value(Iterable.generate(this.len)
-        .map((i) => Student(
-            name: "",
-            age: 14,
-            schoolId: 1001,
-            gender: 1,
-            phone: "655001$i"))
-        .toList());
+    _rn.names(10);
+    return Future.value([]);
   }
 }

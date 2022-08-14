@@ -1,27 +1,34 @@
 import 'dart:math' as m;
 
 class Random {
-  final m.Random _rn;
+  final m.Random _nameRn;
+  final m.Random _genderRn;
   final List<String> _familyNameList;
   final List<String> _firstNameList;
   Random.seed(int seed)
-      : _rn = m.Random(seed),
+      : _nameRn = m.Random(seed),
+        _genderRn = m.Random(seed),
         _familyNameList = _familyNames.trim().split(""),
         _firstNameList = _firstNames.trim().split("");
 
   Iterable<String> names(int length) sync* {
     for (var i = 0; i < length; i++) {
-      final isThree = _rn.nextBool();
-      final familyNameIndex = _rn.nextInt(_familyNameList.length);
-      final firstNameIndex = _rn.nextInt(_firstNameList.length);
+      final isThree = _nameRn.nextBool();
+      final familyNameIndex = _nameRn.nextInt(_familyNameList.length);
+      final firstNameIndex = _nameRn.nextInt(_firstNameList.length);
       final family = _familyNameList[familyNameIndex];
       var first = _firstNameList[firstNameIndex];
       if (isThree) {
-        final first2Index = _rn.nextInt(_firstNameList.length);
+        final first2Index = _nameRn.nextInt(_firstNameList.length);
         first += _firstNameList[first2Index];
       }
       yield "$family$first";
     }
+  }
+
+  Iterable<int> ages() sync* {
+    final gender = _genderRn.nextBool() ? 1 : 2;
+    yield gender;
   }
 }
 
