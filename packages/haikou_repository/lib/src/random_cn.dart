@@ -1,13 +1,11 @@
 import 'dart:math' as m;
 
-class Random {
+class NameGenerator {
   final m.Random _nameRn;
-  final m.Random _genderRn;
   final List<String> _familyNameList;
   final List<String> _firstNameList;
-  Random.seed(int seed)
+  NameGenerator.seed(int seed)
       : _nameRn = m.Random(seed),
-        _genderRn = m.Random(seed),
         _familyNameList = _familyNames.trim().split(""),
         _firstNameList = _firstNames.trim().split("");
 
@@ -24,11 +22,6 @@ class Random {
       }
       yield "$family$first";
     }
-  }
-
-  Iterable<int> ages() sync* {
-    final gender = _genderRn.nextBool() ? 1 : 2;
-    yield gender;
   }
 }
 
