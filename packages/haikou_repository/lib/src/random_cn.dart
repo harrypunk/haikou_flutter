@@ -9,23 +9,19 @@ class Random {
         _familyNameList = _familyNames.trim().split(""),
         _firstNameList = _firstNames.trim().split("");
 
-  List<String> names(int length) {
-    return Iterable.generate(length).map((i) {
+  Iterable<String> names(int length) sync* {
+    for (var i = 0; i < length; i++) {
       final isThree = _rn.nextBool();
       final familyNameIndex = _rn.nextInt(_familyNameList.length);
       final firstNameIndex = _rn.nextInt(_firstNameList.length);
-      final firstNameIndex2 =
-          isThree ? _rn.nextInt(_firstNameList.length) : null;
-      return [familyNameIndex, firstNameIndex, firstNameIndex2];
-    }).map((indexes) {
-      final family = _familyNameList[indexes[0]!];
-      var first = _firstNameList[indexes[1]!];
-      final thirdIndex = indexes[2];
-      if (thirdIndex != null) {
-        first += _firstNameList[thirdIndex];
+      final family = _familyNameList[familyNameIndex];
+      var first = _firstNameList[firstNameIndex];
+      if (isThree) {
+        final first2Index = _rn.nextInt(_firstNameList.length);
+        first += _firstNameList[first2Index];
       }
-      return "$family$first";
-    }).toList();
+      yield "$family$first";
+    }
   }
 }
 
